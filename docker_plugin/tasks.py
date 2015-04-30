@@ -63,6 +63,7 @@ def create_container(params, daemon_client=None, **_):
     arguments.update(utils.get_create_container_params(params, ctx=ctx))
 
     try:
+        ctx.logger.info('About to create container with arguments: %s' % arguments)
         container = client.create_container(**arguments)
     except docker.errors.APIError as e:
         raise NonRecoverableError('Error while creating container: '
@@ -98,6 +99,7 @@ def start(params, processes_to_wait_for, retry_interval,
     arguments = utils.get_start_params(container_id, params, ctx=ctx)
 
     try:
+        ctx.logger.info('About to start container with arguments: %s' % arguments)
         response = client.start(**arguments)
     except docker.errors.APIError as e:
         raise NonRecoverableError('Failed to start container: '
